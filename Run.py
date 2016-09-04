@@ -1,3 +1,5 @@
+"""Run this script with |python run.py|."""
+
 import string
 
 from chatbot import ChatBot
