@@ -5,6 +5,8 @@ from command import Command
 
 class QuitCommand(Command):
   def _send_response(self):
+    if self.args[0] != '!quit':
+      return
     if twitch_api.is_moderator(self.user):
       self.chatbot.send_chat_message('Disconnecting...')
       sys.exit()

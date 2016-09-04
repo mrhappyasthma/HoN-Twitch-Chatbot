@@ -1,3 +1,5 @@
+from commands import account_command
+from commands import change_account_command
 from commands import mmr_command
 from commands import quit_command
 
@@ -5,7 +7,7 @@ class CommandCenter(object):
 
   def __init__(self, chatbot):
     self.chatbot = chatbot
-    self.hon_account = 'Bubly'
+    self.hon_account = None
 
   def _extract_username_from_line(self, line):
     """Extract the user who send the message from a line of chat.
@@ -60,7 +62,13 @@ class CommandCenter(object):
 
     message_args = message.split()
     msg = message_args[0]
-    if msg == '!mmr':
+    if msg == '!acc' or msg == '!account':
+      account_command.AccountCommand(user, message_args, self.chatbot, self.hon_account)
+    elif msg == '!changeacc':
+      cmd = change_account_command.ChangeAccountCommand(user, message_args, self.chatbot)
+      new_hon_account = cmd.get_new_account()
+      self.hon_account = new_hon_account if new_hon_account else self.hon_account
+    elif msg == '!mmr':
       mmr_command.MmrCommand(user, message_args, self.chatbot, self.hon_account)
-    if msg == '!quit':
+    elif msg == '!quit':
       quit_command.QuitCommand(user, message_args, self.chatbot)
