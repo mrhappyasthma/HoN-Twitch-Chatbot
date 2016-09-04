@@ -1,2 +1,3 @@
 *.pyc
-Settings.py
+twitch_settings.py
+apis/hon/hon_settings.py
