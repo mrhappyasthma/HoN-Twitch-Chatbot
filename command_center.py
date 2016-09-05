@@ -1,7 +1,9 @@
 from commands import account_command
 from commands import change_account_command
 from commands import mmr_command
+from commands import playlist_command
 from commands import quit_command
+from commands import song_command
 
 class CommandCenter(object):
 
@@ -62,7 +64,7 @@ class CommandCenter(object):
 
     message_args = message.split()
     msg = message_args[0]
-    if msg == '!acc' or msg == '!account':
+    if msg == '!acc':
       account_command.AccountCommand(user, message_args, self.chatbot, self.hon_account)
     elif msg == '!changeacc':
       cmd = change_account_command.ChangeAccountCommand(user, message_args, self.chatbot)
@@ -70,5 +72,9 @@ class CommandCenter(object):
       self.hon_account = new_hon_account if new_hon_account else self.hon_account
     elif msg == '!mmr':
       mmr_command.MmrCommand(user, message_args, self.chatbot, self.hon_account)
+    elif msg == '!playlist':
+      playlist_command.PlaylistCommand(user, message_args, self.chatbot)
     elif msg == '!quit':
       quit_command.QuitCommand(user, message_args, self.chatbot)
+    elif msg == '!song':
+      song_command.SongCommand(user, message_args, self.chatbot)
