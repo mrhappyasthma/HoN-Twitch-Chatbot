@@ -6,9 +6,9 @@ class AccountCommand(Command):
     super(AccountCommand, self).__init__(user, args, chatbot)
 
   def _send_response(self):
-    if self.args[0] != '!acc' and self.args[0] != '!account':
+    if self.args[0] != '!acc' or len(self.args) != 1:
       return
     if not self.hon_account:
       self.chatbot.send_chat_message('No HoN account has been set.')
     else:
-      self.chatbot.send_chat_message('Current HoN account = "' + self.hon_account + '".')
+      self.chatbot.send_chat_message('Current HoN account = ' + self.hon_account)
