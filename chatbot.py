@@ -127,7 +127,7 @@ class ChatBot(object):
   def handle_commands(self):
     print 'Waiting for commands...'
     incomplete_data = ''
-    while True:
+    while True:  # Loops foever. Should be called inside a thread.
       lines = self._read_lines(incomplete_data)
       if len(lines) > 1:
         incomplete_data = lines.pop()
