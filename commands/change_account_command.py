@@ -12,7 +12,7 @@ class ChangeAccountCommand(Command):
     if twitch_api.is_moderator(self.user):
       self.hon_account = self.args[1]
       if self.hon_account:
-        self.chatbot.send_chat_message('Tracking HoN account: "' + self.hon_account + '".')
+        self.chatbot.send_chat_message('Tracking HoN account: ' + self.hon_account)
 
   def get_new_account(self):
     return self.hon_account
