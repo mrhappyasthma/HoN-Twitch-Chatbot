@@ -67,7 +67,7 @@ class CommandCenter(object):
 
     message_args = message.split()
     msg = message_args[0]
-    if msg == '!acc':
+    if msg == '!acc' or msg == '!account':
       account_command.AccountCommand(user, message_args, self.chatbot, self.hon_account)
     elif msg == '!changeacc':
       cmd = change_account_command.ChangeAccountCommand(user, message_args, self.chatbot)
