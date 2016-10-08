@@ -1,0 +1,3 @@
+[submodule "deps/pyHoNBot"]
+	path = deps/pyHoNBot
+	url = git://github.com/mrhappyasthma/pyHoNBot.git
