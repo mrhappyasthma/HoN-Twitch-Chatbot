@@ -12,6 +12,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'deps'
 from deps.pyHoNBot import bot
 honbot = imp.load_source('honbot', 'deps/pyHoNBot/honbot')
 
+
 def load_config():
   '''Copied from main() in pyHoNBot/honbot.'''
   config_modules = []
@@ -32,6 +33,8 @@ def main():
   configs = load_config()
   config = configs[0]
   if config:
+    # Hack to allow pyHoNBot to use the correct home directory.
+    bot.home = os.path.join(os.getcwd(), 'deps', 'pyHoNbot')
     hon_chat_bot = bot.Bot(config)
 
     twitch_chat_bot = ChatBot(hon_chat_bot)
