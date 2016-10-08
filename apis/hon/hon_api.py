@@ -21,8 +21,11 @@ def _get_player_stats(username):
   stats_tmpl = 'player_statistics/ranked/nickname/{0}/?token={1}'
   url = HON_API_URL + stats_tmpl.format(username, hon_settings.HON_TOKEN)
   html_response = requests.get(url)
-  response_content = json.loads(html_response.content)
-  return response_content if html_response.status_code == 200 else {}
+  if html_response and html_response.content:
+    response_content = json.loads(html_response.content)
+    return response_content if html_response.status_code == 200 else {}
+  else:
+    return {}
 
 
 def get_mmr(username):

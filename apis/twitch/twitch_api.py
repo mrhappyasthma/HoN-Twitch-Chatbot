@@ -14,8 +14,10 @@ def _query_twitch_viewer_api():
   twitch_chatters_base_url = 'http://tmi.twitch.tv/group/user/{0}/chatters'
   url = twitch_chatters_base_url.format(twitch_settings.CHANNEL)
   html_response = requests.get(url)
-  response_content = json.loads(html_response.content)
-  return response_content if html_response.status_code == 200 else {}
+  if html_response and html_response.content:
+    response_content = json.loads(html_response.content)
+    return response_content if html_response.status_code == 200 else {}
+  return {}
 
 
 def _get_chatters():

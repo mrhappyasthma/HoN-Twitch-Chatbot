@@ -13,4 +13,7 @@ class MmrCommand(Command):
       self.chatbot.send_chat_message('Unknown mmr - No HoN account has been set.')
       return
     mmr = hon_api.get_mmr(self.hon_account)
-    self.chatbot.send_chat_message('Current mmr = ' + mmr)
+    if mmr:
+      self.chatbot.send_chat_message('Current mmr = ' + mmr)
+    else:
+      self.chatbot.send_chat_message('HoN API is down because S2 fking blows.')
