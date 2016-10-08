@@ -1,4 +1,5 @@
 *.pyc
+*.db
 now_playing.txt
 twitch_settings.py
 apis/hon/hon_settings.py
