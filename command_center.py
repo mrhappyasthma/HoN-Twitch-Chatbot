@@ -1,15 +1,18 @@
 from commands import account_command
 from commands import change_account_command
+from commands import nice_feed_command
 from commands import mmr_command
+from commands import play_with_me_command
 from commands import playlist_command
 from commands import quit_command
 from commands import song_command
 
 class CommandCenter(object):
 
-  def __init__(self, chatbot):
+  def __init__(self, chatbot, honbot):
     self.chatbot = chatbot
     self.hon_account = None
+    self.honbot = honbot
 
   def _extract_username_from_line(self, line):
     """Extract the user who send the message from a line of chat.
@@ -78,3 +81,7 @@ class CommandCenter(object):
       quit_command.QuitCommand(user, message_args, self.chatbot)
     elif msg == '!song':
       song_command.SongCommand(user, message_args, self.chatbot)
+    elif msg == '!playwithme':
+      play_with_me_command.PlayWithMeCommand(user, message_args, self.chatbot, self.honbot, self.hon_account)
+    elif msg == '!nicefeed':
+      nice_feed_command.NiceFeedCommand(user, message_args, self.chatbot, self.honbot, self.hon_account)

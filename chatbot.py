@@ -16,10 +16,10 @@ class ChatBot(object):
       bot.send_chat_message('Hello World')
       bot.handle_commands()
   """
-  def __init__(self, host='irc.twitch.tv', port=6667):
+  def __init__(self, hon_bot, host='irc.twitch.tv', port=6667):
     self.host = host
     self.port = port
-    self.command_center = CommandCenter(self)
+    self.command_center = CommandCenter(self, hon_bot)
     self.socket = None
     self.channel = None
     self._load_twitch_settings()
