@@ -4,4 +4,3 @@ now_playing.txt
 twitch_settings.py
 apis/hon/hon_settings.py
 commands/playlist_command.py
-deps/
