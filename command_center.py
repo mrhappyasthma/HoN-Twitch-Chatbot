@@ -2,6 +2,7 @@ from commands import account_command
 from commands import change_account_command
 from commands import nice_feed_command
 from commands import mmr_command
+from commands import pick_hero_command
 from commands import play_with_me_command
 from commands import playlist_command
 from commands import quit_command
@@ -85,3 +86,5 @@ class CommandCenter(object):
       play_with_me_command.PlayWithMeCommand(user, message_args, self.chatbot, self.honbot, self.hon_account)
     elif msg == '!nicefeed':
       nice_feed_command.NiceFeedCommand(user, message_args, self.chatbot, self.honbot, self.hon_account)
+    elif msg == '!pick':
+      pick_hero_command.PickHeroCommand(user, message_args, self.chatbot, self.honbot, self.hon_account)

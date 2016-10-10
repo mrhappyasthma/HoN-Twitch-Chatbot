@@ -1,6 +1,6 @@
 # Used to filter what words are allowed to be copied from the chat to send
 # into the HoN whisper.
-whitelist = [
+hon_hero_name_whitelist = [
   'Accursed',
   'Aluna',
   'Ra',
