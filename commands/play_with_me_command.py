@@ -19,4 +19,4 @@ class PlayWithMeCommand(Command):
     else:
       message_string = 'Twitch user "' + self.user + '" wants to play with you next game!'
       self.honbot.write_packet(packets.ID.HON_SC_WHISPER, self.hon_account, message_string)
-      self.chatbot.send_chat_message('Play request sent to HoN account: ' + self.hon_account)
+      self.chatbot.send_chat_message('Play request sent.')
