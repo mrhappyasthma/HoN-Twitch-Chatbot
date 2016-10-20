@@ -30,7 +30,7 @@ hon_hero_name_whitelist = [
   'Bush',
   'Bushwack',
   'Calamity',
-  'Chronos'
+  'Chronos',
   'Circe',
   'CD',
   'Corrupted Disciple',
