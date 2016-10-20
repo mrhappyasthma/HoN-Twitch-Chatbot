@@ -14,13 +14,21 @@ class PickHeroCommand(Command):
     super(PickHeroCommand, self).__init__(user, args, chatbot)
 
   def _send_response(self):
-    if self.args[0] != '!pick' or len(self.args) != 2:
+    if self.args[0] != '!pick':
       return
     if not self.honbot or not self.hon_account:
       self.chatbot.send_chat_message('The HoN TwitchBot is currently down.')
     else:
-      if self.args[1].lower() in map(str.lower, hon_hero_name_whitelist):
-        hero_index = map(str.lower, hon_hero_name_whitelist).index(self.args[1].lower())
+      hero_request = _concatenate_args(self.args).lower()
+      if hero_request in map(str.lower, hon_hero_name_whitelist):
+        hero_index = map(str.lower, hon_hero_name_whitelist).index(hero_request)
         message_string = 'Twitch user "' + self.user + '" wants to you to pick "' + hon_hero_name_whitelist[hero_index] + '"!'
         self.honbot.write_packet(packets.ID.HON_SC_WHISPER, self.hon_account, message_string)
         self.chatbot.send_chat_message('Hero request sent.')
+
+def _concatenate_args(args):
+  hero_request = ''
+  for i in range(1, len(args)):
+    hero_request += str(args[i])
+    hero_request += ' '
+  return hero_request[:-1]
