@@ -230,7 +230,7 @@ hon_hero_name_whitelist = [
   'MM',
   'Madman',
   'The Madman',
-  'TB'
+  'TB',
   'Thunder',
   'Thunderbringer',
   'Tort',
@@ -247,8 +247,8 @@ hon_hero_name_whitelist = [
   'WB',
   'War Beast',
   'WS',
-  'Wildsoul'
-  'Witch Slayer'
+  'Wildsoul',
+  'Witch Slayer',
   'Hag',
   'Wretched Hag',
   'Zeph',
