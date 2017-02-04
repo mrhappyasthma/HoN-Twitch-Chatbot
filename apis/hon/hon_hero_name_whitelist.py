@@ -15,7 +15,7 @@ hon_hero_name_whitelist = [
   'Artesia',
   'Artillery',
   'Balph',
-  'Balphagore'
+  'Balphagore',
   'Behe',
   'Behemoth',
   'Berzerker',
@@ -39,6 +39,7 @@ hon_hero_name_whitelist = [
   'Damp',
   'Dampeer'
   'Deadlift',
+  'DL',
   'DW',
   'Deadwood',
   'Defiler',
