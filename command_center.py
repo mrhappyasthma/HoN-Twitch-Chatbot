@@ -8,11 +8,17 @@ from commands import playlist_command
 from commands import quit_command
 from commands import song_command
 
+import os
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'deps', 'pyHoNBot'))
+from deps.pyHoNBot.hon import packets
+
 class CommandCenter(object):
 
   def __init__(self, chatbot, honbot):
     self.chatbot = chatbot
-    self.hon_account = None
+    self.hon_account = ''
     self.honbot = honbot
 
   def _extract_username_from_line(self, line):
@@ -54,6 +60,12 @@ class CommandCenter(object):
         return split_by_colon[2]
     return ''
 
+
+  def whisper(self, message):
+    if self.hon_account:
+      self.honbot.write_packet(packets.ID.HON_SC_WHISPER, self.hon_account, message)
+
+
   def process(self, line):
     """Process a line of text and handle any commands that may occur.
 
@@ -64,27 +76,41 @@ class CommandCenter(object):
     message = self._extract_message_from_line(line)
     if not user or not message:
       return
-    print 'COMMAND -> User: "' + user + '" Message: "' + message + '"'
+    print('COMMAND -> User: "' + user + '" Message: "' + message + '"')
 
     message_args = message.split()
     msg = message_args[0]
     if msg == '!acc' or msg == '!account':
       account_command.AccountCommand(user, message_args, self.chatbot, self.hon_account)
+      return
     elif msg == '!changeacc':
       cmd = change_account_command.ChangeAccountCommand(user, message_args, self.chatbot)
       new_hon_account = cmd.get_new_account()
       self.hon_account = new_hon_account if new_hon_account else self.hon_account
+      return
     elif msg == '!mmr':
       mmr_command.MmrCommand(user, message_args, self.chatbot, self.hon_account)
+      return
     elif msg == '!playlist':
       playlist_command.PlaylistCommand(user, message_args, self.chatbot)
+      return
     elif msg == '!quit':
       quit_command.QuitCommand(user, message_args, self.chatbot)
+      return
     elif msg == '!song':
       song_command.SongCommand(user, message_args, self.chatbot)
+      return
     elif msg == '!playwithme':
       play_with_me_command.PlayWithMeCommand(user, message_args, self.chatbot, self.honbot, self.hon_account)
+      return
     elif msg == '!nicefeed':
       nice_feed_command.NiceFeedCommand(user, message_args, self.chatbot, self.honbot, self.hon_account)
+      return
     elif msg == '!pick':
       pick_hero_command.PickHeroCommand(user, message_args, self.chatbot, self.honbot, self.hon_account)
+      return
+
+    if user != 'stratking' and user != 'nightbot':
+      message_string = user + ' says: "' + message + '"'
+      self.whisper(message_string)
+
