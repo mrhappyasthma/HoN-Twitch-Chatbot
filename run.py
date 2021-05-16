@@ -5,6 +5,7 @@ import os
 import string
 import sys
 import threading
+import tkinter as tk
 
 from chatbot import ChatBot
 from apis.spotify import spotify_api
@@ -28,6 +29,41 @@ def load_config():
   return config_modules
 
 
+def terminate():
+  print("Goodbye!")
+  sys.exit()
+
+
+def test_message(twitch_chat_bot):
+  twitch_chat_bot.command_center.whisper("This is a test!")
+
+
+def username_changed(twitch_chat_bot, var):
+  twitch_chat_bot.command_center.hon_account = var.get()
+
+
+def create_window(twitch_chat_bot):
+  window = tk.Tk()
+  window.title("HoN Twitch Chatbot")
+  tk.Button(window, text="Exit", command=lambda: terminate())
+
+  username_label = tk.Label(text="Username:")
+  username_label.pack()
+
+  username = tk.StringVar()
+  try:
+    username.trace_add("write", lambda *args: username_changed(twitch_chat_bot, username))
+  except:  #python 2
+    username.trace("w", lambda *args: username_changed(twitch_chat_bot, username))
+  username_entry = tk.Entry(window, textvariable=username)
+  username_entry.pack()
+
+  test_button = tk.Button(text="Send test message", command=lambda: test_message(twitch_chat_bot))
+  test_button.pack()
+
+  window.mainloop()
+
+
 def main():
   # Create the pyHoNBot and log in.
   configs = load_config()
@@ -48,8 +84,12 @@ def main():
     obs_file_thread = threading.Thread(target=spotify_api.write_to_OBS_file)
     obs_file_thread.start()
 
-    # Run the pyHoNBot.
-    hon_chat_bot.run()
+    # Run the pyHoNBot which connects to the HoN chat channel.
+    honbot_thread = threading.Thread(target=hon_chat_bot.run)
+    honbot_thread.start()
+
+    # Create the window to manage controls.
+    create_window(twitch_chat_bot)
 
 
 if __name__ == '__main__':
