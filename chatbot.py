@@ -1,5 +1,8 @@
 import socket
-import StringIO
+try:
+    from StringIO import StringIO ## for Python 2
+except ImportError:
+    from io import StringIO ## for Python 3
 
 from command_center import CommandCenter
 import twitch_settings
@@ -39,9 +42,9 @@ class ChatBot(object):
     """
     if self.socket:
       self.socket.send(text + '\r\n')
-      print 'SENT: "' + text + '"'
+      print('SENT: "' + text + '"')
     else:
-      print 'ERROR: Cannot send message "' + text + '" because you have not connected yet.'
+      print('ERROR: Cannot send message "' + text + '" because you have not connected yet.')
 
   def _login(self):
     """Logs in to an account using a username and oauth as a password.
@@ -49,15 +52,15 @@ class ChatBot(object):
     Note: If the connection has not been opened, nothing happens.
     """
     if self.socket:
-      print 'Logging in....'
+      print('Logging in....')
       self._send('PASS ' + self.password)
       self._send('NICK ' + self.username)
-      print 'Logged in successfully!'
+      print('Logged in successfully!')
     else:
-      print 'ERROR: Cannot login channel because you have not connected yet.'
+      print('ERROR: Cannot login channel because you have not connected yet.')
 
   def _read_lines(self, incomplete_data):
-    buffer = StringIO.StringIO(4096)
+    buffer = StringIO(4096)
     if incomplete_data:
       buffer.write(incomplete_data)
     data = self.socket.recv(1024)
@@ -85,14 +88,14 @@ class ChatBot(object):
     """
     if self.socket:
       if channel != self.channel:
-        print 'Joining channel: #' + channel
+        print('Joining channel: #' + channel)
         self.channel = channel
         self._send('JOIN #' + self.channel)
         self._wait_until_successful_channel_join()
         self.send_chat_message('Joined channel successfully!')
         print('Successfully joined channel: #' + self.channel)
     else:
-      print 'ERROR: Cannot join channel #' + channel + ' because you have not connected yet.'
+      print('ERROR: Cannot join channel #' + channel + ' because you have not connected yet.')
 
   def connect(self):
     """Connects with Twitch by logging-in and joining a channel.
@@ -100,14 +103,14 @@ class ChatBot(object):
     Note: Calling this method twice will have no effect.
     """
     if not self.socket:
-      print 'Initiating connection...'
+      print('Initiating connection...')
       self.socket = socket.socket()
       self.socket.connect((self.host, self.port))
-      print 'Connected!'
+      print('Connected!')
       self._login()
       self.join_channel(twitch_settings.CHANNEL)
     else:
-      print 'WARNING: You cannot connect twice.'
+      print('WARNING: You cannot connect twice.')
 
   def send_chat_message(self, message):
     """Sends a message over the socket to the current Twitch chat channel.
@@ -122,10 +125,10 @@ class ChatBot(object):
       message = 'PRIVMSG #' + self.channel + ' :' + message
       self._send(message)
     else:
-      print 'ERROR: Cannot send message "' + message + '" because you have not connected yet.'
+      print('ERROR: Cannot send message "' + message + '" because you have not connected yet.')
 
   def handle_commands(self):
-    print 'Waiting for commands...'
+    print('Waiting for commands...')
     incomplete_data = ''
     while True:  # Loops foever. Should be called inside a thread.
       lines = self._read_lines(incomplete_data)
