@@ -5,7 +5,7 @@ import os
 import string
 import sys
 import threading
-import tkinter as tk
+import Tkinter as tk
 
 from chatbot import ChatBot
 from apis.spotify import spotify_api
@@ -72,6 +72,7 @@ def main():
     # Hack to allow pyHoNBot to use the correct home directory.
     bot.home = os.path.join(os.getcwd(), 'deps', 'pyHoNbot')
     hon_chat_bot = bot.Bot(config)
+    print(config)
 
     twitch_chat_bot = ChatBot(hon_chat_bot)
     twitch_chat_bot.connect()
