@@ -1,0 +1,3 @@
+[submodule "deps/ProjectKongorChatBot"]
+	path = deps/ProjectKongorChatBot
+	url = https://github.com/HoN-Revival/Project-Kongor-Chat-Bot.git
